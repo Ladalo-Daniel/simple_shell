@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _printf - this is my own custome defined printf function that
+ * _printf - ladalo and mav custome defined printf function that
  * prints to the standard output, it handles, %c and %s only for
  * the sake of simplicity, I would be implementing this in my shell.
  * @format: this represents the format specifier for the chars to be
