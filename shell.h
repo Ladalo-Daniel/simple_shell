@@ -40,7 +40,7 @@ void cmd_seperator(char *get_line_val, char *currt_wrk_dir, char *user_prompt);
 int _printf(const char *format, ...);
 int _putchar(char c);
 int err_putchar(char c);
-int _strlen(char *str);
+size_t _strlen(char *str);
 void print_integer(int val);
 int _fprintf(FILE *stream, const char *format, ...);
 int _integer_length(int integer);
