@@ -12,10 +12,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-extern char **environ;
-
-/*extern char path_name[];*/
-
 #define MAX_INPUT_SIZE 1024
 #define MAX_ARGS 1024
 
@@ -27,9 +23,7 @@ void execute_builtin_command(char **command, char *valget);
 char *ldb_getline(void);
 char *ldb_strtok(char *str, const char *delim);
 char *ldb_non_interactive_getline(void);
-char *ldb_getenv(char *env_name);
-void cmd_seperator(char *get_line_val, char *currt_wrk_dir, char *user_prompt);
-void change_dir(char *cmd_args[], char *currt_wrk_dir);
+char *ldb_getenv(char *enviro);
 int _putchar(char c);
 size_t _strlen(const char *str);
 int _printf(const char *format, ...);
@@ -37,6 +31,8 @@ void print_integer(int val);
 int err_putchar(char c);
 int _integer_length(int integer);
 int _fprintf(FILE *stream, const char *format, ...);
+int _strcmp(char *s1, char *s2);
 int ldb_strncmp(char *str1, char *str2, int num);
 
+extern char **environ;
 #endif

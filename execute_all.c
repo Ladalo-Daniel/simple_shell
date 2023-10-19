@@ -15,7 +15,7 @@ void execute_builtin_command(char **command, char *valget)
 
 	char *file_path = "/bin/";
 
-	if (strcmp(command[0], "exit") == 0)
+	if (_strcmp(command[0], "exit") == 0)
 	{
 		if (command[1] != NULL)
 		{
@@ -23,7 +23,7 @@ void execute_builtin_command(char **command, char *valget)
 
 			long status = strtol(command[1], &endptr, 10);
 
-			if (strcmp(command[1], "-98") == 0)
+			if (_strcmp(command[1], "-98") == 0)
 			{
 				char *a = command[0];
 
@@ -68,7 +68,7 @@ void execute_builtin_command(char **command, char *valget)
 			exit(0);
 		}
 	}
-	else if (strcmp(command[0], "env") == 0)
+	else if (_strcmp(command[0], "env") == 0)
 	{
 		char **env;
 
@@ -77,19 +77,19 @@ void execute_builtin_command(char **command, char *valget)
 			_printf("%s\n", *env);
 		}
 	}
-	else if (strcmp(command[0], "setenv") == 0)
+	else if (_strcmp(command[0], "setenv") == 0)
 	{
 		/*implement*/
 	}
-	else if (strcmp(command[0], "unsetenv") == 0)
+	else if (_strcmp(command[0], "unsetenv") == 0)
 	{
 		/*implement*/
 	}
-	else if (strcmp(command[0], "cd") == 0)
+	else if (_strcmp(command[0], "cd") == 0)
 	{
 		/*implement*/
 	}
-	else if (strcmp(command[0], "#") == 0)
+	else if (_strcmp(command[0], "#") == 0)
 	{
 		/*NIL*/
 	}

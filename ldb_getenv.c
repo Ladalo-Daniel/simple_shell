@@ -3,32 +3,30 @@
 /**
 * ldb_getenv - dan and mav custom getenv function that would be used
 * to get the current enviroment of my shell.
-* @env_name: this represents the enviroment to be gotten as an argument.
+* @enviro: this represents the enviroment to be gotten as an argument.
 * Return: on sucess it returns the environment, else NULL.
 */
 
-char *ldb_getenv(char *env_name)
+char *ldb_getenv(char *enviro)
 {
-	char **env;
+	char **env,  *ent_env;
 
-	size_t ln = 0;
+	size_t ln;
 
-	char *ent_env;
+	ln = 0;
 
-	if (env_name == NULL) /*No valid name was found*/
+	if (enviro == NULL)
 	{
 		return (NULL);
 	}
-
-	/* Loop through the enviroment variables*/
 
 	for (env = environ; *env != NULL; env++)
 	{
 		ent_env = *env;
 
-		ln = _strlen(env_name);
+		ln = _strlen(enviro);
 
-		if (ldb_strncmp(ent_env, env_name, ln) == 0 && ent_env[ln] == '=')
+		if (ldb_strncmp(ent_env, enviro, ln) == 0 && ent_env[ln] == '=')
 		{
 			return (&ent_env[ln + 1]);
 		}

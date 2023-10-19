@@ -13,16 +13,9 @@ char *ldb_non_interactive_getline(void)
 {
 	ssize_t _read_val;
 
-	char *buf;
+	char *buf, *mem, c;
 
-	char *mem;
-
-
-	int idx = 0;
-
-	int maximum_size = 1024;
-
-	char c;
+	int idx = 0, maximum_size = 1024;
 
 	buf = malloc(maximum_size * sizeof(char));
 
