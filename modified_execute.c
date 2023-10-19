@@ -1,14 +1,13 @@
 #include "shell.h"
+void call_and_execute(char *args[], char *valget);
 
 /**
 * call_and_execute - Execute the given command and handle exit status
 * @args: Command line arguments to execute
-* @get_line_val: this is the getline value to be freed.
+* @valget: this is the getline value to be freed.
 */
 
-void call_and_execute(char *args[], char *get_line_val);
-
-void call_and_execute(char *args[], char *get_line_val)
+void call_and_execute(char *args[], char *valget)
 {
 	pid_t pid_fork_val;
 
@@ -20,7 +19,7 @@ void call_and_execute(char *args[], char *get_line_val)
 	{
 		perror("Fork Error");
 
-		free(get_line_val);
+		free(valget);
 		free(args);
 
 		exit(EXIT_FAILURE);
@@ -33,7 +32,7 @@ void call_and_execute(char *args[], char *get_line_val)
 			if (execve(args[0], args, environ) == -1)
 			{
 				perror("Error: Execution terminated");
-				free(get_line_val);
+				free(valget);
 				free(args);
 				exit(EXIT_FAILURE);
 			}
@@ -59,7 +58,7 @@ void call_and_execute(char *args[], char *get_line_val)
 				token = ldb_strtok(NULL, ":");
 			}
 			_fprintf(stderr, "./hsh: %d: %s: cannot find\n", 1, args[0]);
-			free(get_line_val);
+			free(valget);
 			free(args);
 			exit(127);
 		}
@@ -71,7 +70,7 @@ void call_and_execute(char *args[], char *get_line_val)
 
 			if (WIFEXITED(_status))
 			{
-				free(get_line_val);
+				free(valget);
 				free(args);
 				exit(WEXITSTATUS(_status));
 			}
