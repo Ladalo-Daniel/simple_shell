@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
-* err_putchar - this function prints a single character to the standard
-* error.
-* @c: character to be printed to stderr
-* Return: printed character.
+* err_putchar - function that print single chars
+*
+* @c: chars printed
+* Return: printed chars.
 */
 
 int err_putchar(char c)
@@ -13,18 +13,16 @@ int err_putchar(char c)
 }
 
 /**
-* print_integer - this function prints and interger with err_putchar.
-* @val: integer to be printed.
-* Return: void
+* print_integer - A function thst print an int
+* @val: int to be printed.
+* Return: Always 0
 */
 
 void print_integer(int val)
 {
-	int buf_idx = 0;
+	int i, _idx = 0;
 
-	int i;
-
-	char buffer[12];
+	char buf[12];
 
 	if (val < 0)
 	{
@@ -40,16 +38,16 @@ void print_integer(int val)
 
 	while (val > 0)
 	{
-		buffer[buf_idx] = '0' + (val % 10);
+		buf[_idx] = '0' + (val % 10);
 
-		val /= 10;
+		val = val / 10;
 
-		buf_idx += 1;
+		_idx = _idx + 1;
 	}
 
-	for (i = buf_idx - 1; i >= 0; i--)
+	for (i = _idx - 1; i >= 0; i--)
 	{
-		err_putchar(buffer[i]);
+		err_putchar(buf[i]);
 	}
 }
 
