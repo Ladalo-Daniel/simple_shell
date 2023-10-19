@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
-* ldb_strtok - this is a custom function that tokenizes a string
+* ldb_strtok - dan mavy custom function that tokenizes a string
 * it works based on the delimiter of the string to be tokenized.
 * @str: string to be tokenized which is the first argument.
 * @delim: this represents the delimiter ofthe string in what pattern
