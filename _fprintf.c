@@ -1,15 +1,13 @@
 #include "shell.h"
+int _fprintf(FILE *stream, const char *format, ...);
 
 /**
-* _fprintf - this function is written for the sole purpose of
-* handling the error output.
-* @stream: file stream / file descriptor.
+* _fprintf - A function that handles error output.
+* @stream: The file descriptor.
 * @format: format specifer arguments.
 *
-* Return: total length of characters printed.
+* Return: The length of string
 */
-
-int _fprintf(FILE *stream, const char *format, ...);
 
 int _fprintf(FILE *stream, const char *format, ...)
 {
@@ -40,53 +38,53 @@ int _fprintf(FILE *stream, const char *format, ...)
 				if (c_val)
 				{
 					err_putchar(c_val);
-					printed_chars += 1;
+					printed_chars = printed_chars + 1;
 				}
 
 			}
 			else if (format[i] == 's')
 			{
-				char *str_val = va_arg(specifier_args, char *);
+				char *_val = va_arg(specifier_args, char *);
 
-				int str_idx = 0;
+				int _idx = 0;
 
-				int str_len = 0;
+				int _len = 0;
 
-				for (str_idx = 0; str_val[str_idx] != '\0'; str_idx++)
+				for (_idx = 0; _val[_idx] != '\0'; _idx++)
 				{
-					err_putchar(str_val[str_idx]);
+					err_putchar(_val[_idx]);
 				}
 
-				while (*str_val != '\0')
+				while (*_val != '\0')
 				{
-					str_len += 1;
+					_len = _len + 1;
 
-					str_val += 1;
+					_val = _val + 1;
 				}
 
-				printed_chars += str_len;
+				printed_chars = printed_chars + _len;
 			}
 			else if (format[i] == 'd')
 			{
-				int num_len = 0;
+				int len = 0;
 
-				int dec_val = va_arg(specifier_args, int);
+				int val = va_arg(specifier_args, int);
 
-				if (!dec_val)
+				if (val == 0)
 				{
 					return (-1);
 				}
 
-				num_len = _integer_length(dec_val);
+				len = _integer_length(val);
 
-				print_integer(dec_val);
-				printed_chars += num_len;
+				print_integer(val);
+				printed_chars += printed_chars + len;
 			}
 		}
 		else
 		{
 			err_putchar(format[i]);
-			printed_chars += 1;
+			printed_chars = printed_chars + 1;
 		}
 	}
 
