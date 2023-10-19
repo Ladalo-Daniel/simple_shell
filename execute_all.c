@@ -1,14 +1,13 @@
 #include "shell.h"
+void execute_builtin_command(char **cmd_args, char *get_line_val);
 
 /**
- * execute_builtin_command - this function handles every logic
- * it checks for buitin commands and calls the executor function.
+ * execute_builtin_command - A function that handles builtin commands
+ *
  * @cmd_args: this is the command arguments to be checked.
- * @get_line_val: this is the getline value argument to be freed.
- * Return: void
+ * @get_line_val: getline value argument to  free.
+ * Return: Always 0
  */
-
-void execute_builtin_command(char **cmd_args, char *get_line_val);
 
 void execute_builtin_command(char **cmd_args, char *get_line_val)
 {
@@ -54,7 +53,7 @@ void execute_builtin_command(char **cmd_args, char *get_line_val)
 
 				int n = 1;
 
-				char *ms = "./hsh: %d: %s: Illegal number: %s\n";
+				char *ms = "./hsh: %d: %s: invalid input: %s\n";
 
 				_fprintf(stderr, ms, n, a, b);
 				free(get_line_val);
@@ -80,23 +79,23 @@ void execute_builtin_command(char **cmd_args, char *get_line_val)
 	}
 	else if (strcmp(cmd_args[0], "setenv") == 0)
 	{
-		/*Logic to be implemented*/
+		/*implement*/
 	}
 	else if (strcmp(cmd_args[0], "unsetenv") == 0)
 	{
-		/*Logic to be implemented*/
+		/*implement*/
 	}
 	else if (strcmp(cmd_args[0], "cd") == 0)
 	{
-		/*Logic to be implemented*/
+		/*implement*/
 	}
 	else if (strcmp(cmd_args[0], "#") == 0)
 	{
-		/* This is a comment, do nothing*/
+		/*NIL*/
 	}
 	else
 	{
-		if (strchr(cmd_args[0], '/') != NULL) /*USer entered full path*/
+		if (strchr(cmd_args[0], '/') != NULL)
 		{
 			if (access(cmd_args[0], X_OK) != -1)
 			{
@@ -106,7 +105,7 @@ void execute_builtin_command(char **cmd_args, char *get_line_val)
 			{
 				int n = 1;
 
-				char *ms = "./hsh: %d: %s: not found\n";
+				char *ms = "./hsh: %d: %s: unavailable\n";
 
 				_fprintf(stderr, ms, n, cmd_args[0]);
 				free(get_line_val);
@@ -114,7 +113,7 @@ void execute_builtin_command(char **cmd_args, char *get_line_val)
 				exit(127);
 			}
 		}
-		else /*User entered the file name*/
+		else
 		{
 			strcpy(executable_file, file_path);
 			strcat(executable_file, cmd_args[0]);
@@ -125,7 +124,7 @@ void execute_builtin_command(char **cmd_args, char *get_line_val)
 			}
 			else
 			{
-				char *ms = "./hsh: %d: %s: not found\n";
+				char *ms = "./hsh: %d: %s: unavailable\n";
 
 				_fprintf(stderr, ms, 1, cmd_args[0]);
 				free(get_line_val);
