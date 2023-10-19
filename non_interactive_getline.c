@@ -1,4 +1,5 @@
 #include "shell.h"
+char *ldb_non_interactive_getline(void);
 
 /**
 * ldb_non_interactive_getline - this is the custom getline function for..
@@ -7,17 +8,15 @@
 * Return: On succes, it returns the pointer to the array of characters
 * read from the filestream.
 */
-char *ldb_non_interactive_getline(void);
 
 char *ldb_non_interactive_getline(void)
 {
-	ssize_t num_read_val;
+	ssize_t _read_val;
 
-	char *buffer_ptr;
+	char *buf;
 
-	char *mem_ptr;
+	char *mem;
 
-/*	size_t buffer_ptr_len = 0;*/
 
 	int idx = 0;
 
@@ -25,66 +24,59 @@ char *ldb_non_interactive_getline(void)
 
 	char c;
 
-	buffer_ptr = malloc(maximum_size * sizeof(char));
+	buf = malloc(maximum_size * sizeof(char));
 
-	if (buffer_ptr == NULL)
+	if (buf == NULL)
 	{
-		perror("Failed to allocate memory");
+		perror("Memory Allocation Fail");
 
 		exit(1);
 	}
 
-	while ((num_read_val = read(STDIN_FILENO, &c, 1)) > 0)
+	while ((_read_val = read(STDIN_FILENO, &c, 1)) > 0)
 	{
 		if (c == EOF || c == '\n')
 		{
-			/*Stops the loop*/
 			break;
 		}
 
-		buffer_ptr[idx++] = c; /*Populate the allocated memory with c*/
+		buf[idx++] = c;
 
-
-		/*Check if memory allocated is enough*/
 		if (idx >= (maximum_size - 1))
 		{
-			maximum_size += 1024;
+			maximum_size = maximum_size + 1024;
 
-			mem_ptr = realloc(buffer_ptr, maximum_size);
+			mem = realloc(buf, maximum_size);
 
-			if (mem_ptr == NULL)
+			if (mem == NULL)
 			{
 				perror("Reallocation of memory failed");
 
-				free(buffer_ptr); /*free alloc mem*/
+				free(buf);
 
 				exit(1);
 			}
-			/*Memory Reallocation successful update bfr_ptr*/
 
-			buffer_ptr = mem_ptr;
+			buf = mem;
 		}
 	}
 
 
-	if (num_read_val == -1) /*read failed*/
+	if (_read_val == -1)
 	{
-		perror("Read failed");
-		free(buffer_ptr); /*Free allocated mem*/
+		perror("Error");
+		free(buf);
 		exit(1);
 	}
 
-
-	/*Check if no characters were read*/
-	if (num_read_val == 0)
+	if (_read_val == 0)
 	{
-		free(buffer_ptr);
+		free(buf);
 
 		exit(1);
 	}
 
-	/*Null terminat the buffer*/
-	buffer_ptr[idx] = '\0';
+	buf[idx] = '\0';
 
-	return (buffer_ptr);
+	return (buf);
 }
