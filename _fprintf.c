@@ -25,7 +25,7 @@ int _fprintf(FILE *stream, const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			i += 1; /*move to the next character index*/
+			i = i + 1;
 
 			if (format[i] == '%')
 			{
@@ -78,7 +78,7 @@ int _fprintf(FILE *stream, const char *format, ...)
 				len = _integer_length(val);
 
 				print_integer(val);
-				printed_chars += printed_chars + len;
+				printed_chars = printed_chars + len;
 			}
 		}
 		else
