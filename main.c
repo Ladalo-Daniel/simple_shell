@@ -1,107 +1,97 @@
 #include "shell.h"
+#include <stdbool.h>
+int main(void);
 
 /**
- * main - this is the main function for my shell program.
+ * main - Entry point for simple shell.
  * Return: 0 on sucess.
  */
-
-int main(void);
 
 int main(void)
 {
 	bool interactive_shell;
 
-	char *get_line_val;
+	char *_getline_;
 
 	char **cmd_args;
 
-	char *token;
+	char *_prompt = "Marv&Dan$ ", *token;
 
-	int arg_idx;
+	int _idx = 0;
 
-	char *usr_prmpt = "(Genius Excel)$ ";
 
 	interactive_shell = isatty(fileno(stdin));
 
 
-	while (1)
+	while (true)
 	{
 
-		/*check for interactive shell mode*/
 		if (interactive_shell)
 		{
-			_printf("%s", usr_prmpt);
+			_printf("%s", _prompt);
 
 			fflush(stdout);
 
-			get_line_val = ldb_getline();
+			_getline_ = ldb_getline();
 
-			if (get_line_val == NULL)
+			if (_getline_ == NULL)
 			{
-				break; /*Exit interactive mode*/
+				break;
 			}
 
-			/*printf("(Favour Shell)%s$ ", currt_wrk_dir); */
 		}
-		else /*Indicates shell is in non-interactive mode*/
+		else
 		{
-			get_line_val = ldb_non_interactive_getline();
+			_getline_ = ldb_non_interactive_getline();
 
-			if (get_line_val == NULL) /*Exit non-interactive mode*/
+			if (_getline_ == NULL)
 			{
-				/*Close file and exit the non-interacitve mode*/
 
-				break; /*Switche to interactive shell mode*/
+				break;
 			}
 		}
 
-		/*Check if multiple commands were enetered*/
-		if (strstr(get_line_val, ";") != NULL)
+		if (strstr(_getline_, ";") != NULL)
 		{
-			/*			cmd_seperator(get_line_val, currt_wrk_dir, usr_prmpt);*/
 
-			free(get_line_val);
+			free(_getline_);
 			continue;
 		}
-		/*Dynamically Allocate memory for the arguments to be executed*/
 		cmd_args = malloc(sizeof(char *) * (MAX_ARGS + 1));
 
 		if (cmd_args == NULL)
 		{
-			perror("Failed to Allocate Memory");
+			perror("Memory Allocation Fail");
 			exit(EXIT_FAILURE);
 		}
 
+		token = ldb_strtok(_getline_, " \t\r\n\a");
 
-		arg_idx = 0;
-
-		token = ldb_strtok(get_line_val, " \t\r\n\a");
-
-		while (token != NULL && arg_idx < MAX_ARGS)
+		while (token != NULL && _idx < MAX_ARGS)
 		{
-			cmd_args[arg_idx] = token;
+			cmd_args[_idx] = token;
 
-			arg_idx++;
+			_idx++;
 
 			token = ldb_strtok(NULL, " \t\r\n\a");
 		}
 
-		cmd_args[arg_idx] = NULL;
+		cmd_args[_idx] = NULL;
 
-		if (arg_idx == 0)
+		if (!_idx)
 		{
-			free(get_line_val);
+			free(_getline_);
 			free(cmd_args);
 
 			continue;
 		}
 
-		execute_builtin_command(cmd_args, get_line_val);
+		execute_builtin_command(cmd_args, _getline_);
 
-		free(get_line_val);
+		free(_getline_);
 		free(cmd_args);
 
-		if (!interactive_shell)
+		if (interactive_shell == 0)
 		{
 			break;
 		}
