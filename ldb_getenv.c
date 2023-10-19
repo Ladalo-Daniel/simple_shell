@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
-* ldb_getenv - this is my custom getenv function that would be used
+* ldb_getenv - dan and mav custom getenv function that would be used
 * to get the current enviroment of my shell.
 * @env_name: this represents the enviroment to be gotten as an argument.
 * Return: on sucess it returns the environment, else NULL.
