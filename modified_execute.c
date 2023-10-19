@@ -12,11 +12,11 @@ void call_and_execute(char *args[], char *get_line_val)
 {
 	pid_t pid_fork_val;
 
-	int wt_status;
+	int _status;
 
 	pid_fork_val = fork();
 
-	if (pid_fork_val == -1) /* Potential error in creating a child */
+	if (pid_fork_val == -1)
 	{
 		perror("Fork Error");
 
@@ -26,15 +26,13 @@ void call_and_execute(char *args[], char *get_line_val)
 		exit(EXIT_FAILURE);
 	}
 
-	if (pid_fork_val == 0) /* This indicates the child process */
+	if (pid_fork_val == 0)
 	{
-		/* Condition checks if user entered the full path */
 		if (strchr(args[0], '/') != NULL)
 		{
-			/* Validate the command received before executing */
 			if (execve(args[0], args, environ) == -1)
 			{
-				perror("Error from execve");
+				perror("Error: Execution terminated");
 				free(get_line_val);
 				free(args);
 				exit(EXIT_FAILURE);
@@ -60,7 +58,7 @@ void call_and_execute(char *args[], char *get_line_val)
 
 				token = ldb_strtok(NULL, ":");
 			}
-			_fprintf(stderr, "./hsh: %d: %s: not found\n", 1, args[0]);
+			_fprintf(stderr, "./hsh: %d: %s: cannot find\n", 1, args[0]);
 			free(get_line_val);
 			free(args);
 			exit(127);
@@ -69,18 +67,18 @@ void call_and_execute(char *args[], char *get_line_val)
 	else
 	{
 		do {
-			waitpid(pid_fork_val, &wt_status, 0);
+			waitpid(pid_fork_val, &_status, 0);
 
-			if (WIFEXITED(wt_status))
+			if (WIFEXITED(_status))
 			{
 				free(get_line_val);
 				free(args);
-				exit(WEXITSTATUS(wt_status));
+				exit(WEXITSTATUS(_status));
 			}
-			if (WIFSIGNALED(wt_status))
+			if (WIFSIGNALED(_status))
 			{
-				raise(WTERMSIG(wt_status));
+				raise(WTERMSIG(_status));
 			}
-		} while (WIFEXITED(wt_status) && WIFSIGNALED(wt_status));
+		} while (WIFEXITED(_status) && WIFSIGNALED(_status));
 	}
 }

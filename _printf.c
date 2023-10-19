@@ -1,4 +1,5 @@
 #include "shell.h"
+int _printf(const char *format, ...);
 
 /**
  * _printf - ladalo and mav custome defined printf function that
@@ -9,13 +10,9 @@
  * Return: number of chars printed successfully.
  */
 
-int _printf(const char *format, ...);
-
 int _printf(const char *format, ...)
 {
-	int fmt_idx;
-
-	int printed_chars = 0;
+	int fmt_idx, printed_chars = 0;
 
 	va_list fmt_spec_args;
 
@@ -30,12 +27,12 @@ int _printf(const char *format, ...)
 	{
 		if (format[fmt_idx] == '%')
 		{
-			fmt_idx += 1;
+			fmt_idx = fmt_idx + 1;
 
 			if (format[fmt_idx] == '%')
 			{
 				_putchar('%');
-				printed_chars += 1;
+				printed_chars = printed_chars + 1;
 			}
 			else if (format[fmt_idx] == 'c')
 			{
@@ -44,7 +41,7 @@ int _printf(const char *format, ...)
 				if (chr_val)
 				{
 					_putchar(chr_val);
-					printed_chars += 1;
+					printed_chars = printed_chars + 1;
 				}
 				else
 				{
@@ -53,31 +50,31 @@ int _printf(const char *format, ...)
 			}
 			else if (format[fmt_idx] == 's')
 			{
-				char *str_val = va_arg(fmt_spec_args, char *);
+				char *_val = va_arg(fmt_spec_args, char *);
 
-				int str_idx = 0;
+				int _idx = 0;
 
-				int str_len = 0;
+				int len = 0;
 
-				for (str_idx = 0; str_val[str_idx] != '\0'; str_idx++)
+				for (_idx = 0; _val[_idx] != '\0'; _idx++)
 				{
-					_putchar(str_val[str_idx]);
+					_putchar(_val[_idx]);
 				}
 
-				while (*str_val != '\0')
+				while (*_val != '\0')
 				{
-					str_len += 1;
+					len = len + 1;
 
-					str_val += 1;
+					_val = _val + 1;
 				}
 
-				printed_chars += str_len;
+				printed_chars = printed_chars + len;
 			}
 		}
-		else /*No format specifier was found*/
+		else
 		{
 			_putchar(format[fmt_idx]);
-			printed_chars += 1;
+			printed_chars = printed_chars + 1;
 		}
 	}
 
