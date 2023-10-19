@@ -21,29 +21,26 @@ int _putchar(char c)
 
 int ldb_strncmp(char *str1, char *str2, int num)
 {
-	int comp = 0;
-
-	int i = 0;
+	int j = 0, i = 0;
 
 	while ((*str1 != '\0' || *str2 != '\0') && i < num)
 	{
 		if (*str1 != *str2)
 		{
-			comp += 1;
+			j = j + 1;
 		}
 
-		str1 += 1;
+		str1 = str1 + 1;
 
-		str2 += 1;
+		str2 = str2 + 1;
 
-		i += 1;
+		i = i + 1;
 	}
 
-	/*check for valid comparison*/
-	if (comp != 0)
+	if (j != 0)
 	{
 		return (-1);
 	}
 
-	return (comp);
+	return (j);
 }
