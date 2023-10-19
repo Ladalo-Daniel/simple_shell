@@ -1,42 +1,40 @@
 #include "shell.h"
 
 /**
-* ldb_getline - this is a custom getline function taht reads input
-* from the terminal and returns the array of characters read.
-* It works typically like the traditional getline function.
+* ldb_getline - A getline function which read input from the shell
+*
 * Return: this function returns the array of read strings on success.
 */
 
 char *ldb_getline(void)
 {
-	ssize_t getline_re_val;
+	ssize_t _getline_;
 
-	char *buffer_ptr = NULL;
+	char *buf = NULL;
 
-	size_t buffer_ptr_len = 0;
+	size_t bufflen = 0;
 
 
-	getline_re_val = getline(&buffer_ptr, &buffer_ptr_len, stdin);
+	_getline_ = getline(&buf, &bufflen, stdin);
 
-	if (getline_re_val == -1)
+	if (_getline_ == -1)
 	{
-		/*Check the condition of the end of file*/
+
 
 		if (feof(stdin))
 		{
 			_putchar('\n');
-			free(buffer_ptr);
+			free(buf);
 			exit(EXIT_SUCCESS);
 		}
-		else /*This indicates an error cause it's not end of file*/
+		else
 		{
-			free(buffer_ptr);
-			perror("Getline Failed");
+			free(buf);
+			perror("Failed");
 			exit(EXIT_FAILURE);
 		}
 	}
 
-	/*Control reads to this point indicate no errors encountered.*/
 
-	return (buffer_ptr);
+	return (buf);
 }
